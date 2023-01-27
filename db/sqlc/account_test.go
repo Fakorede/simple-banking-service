@@ -11,9 +11,9 @@ import (
 )
 
 func createRandomAccount(t *testing.T) Account {
-	acc := CreateAccountParams {
-		Owner: utils.RandomOwner(),
-		Balance: utils.RandomAmount(),
+	acc := CreateAccountParams{
+		Owner:    utils.RandomOwner(),
+		Balance:  utils.RandomAmount(),
 		Currency: utils.RandomCurrency(),
 	}
 
@@ -54,8 +54,8 @@ func TestGetAccount(t *testing.T) {
 func TestUpdateAccount(t *testing.T) {
 	acc := createRandomAccount(t)
 
-	arg := UpdateAccountParams {
-		ID: acc.ID,
+	arg := UpdateAccountParams{
+		ID:      acc.ID,
 		Balance: utils.RandomAmount(),
 	}
 
@@ -77,19 +77,19 @@ func TestDeleteAccount(t *testing.T) {
 	err := testQueries.DeleteAccount(context.Background(), acc.ID)
 	require.NoError(t, err)
 
-	account, err:= testQueries.GetAccount(context.Background(), acc.ID)
+	account, err := testQueries.GetAccount(context.Background(), acc.ID)
 	require.Error(t, err)
 	require.EqualError(t, err, sql.ErrNoRows.Error())
 	require.Empty(t, account)
 }
 
 func TestListAccounts(t *testing.T) {
-	for i :=0; i < 10; i++ {
+	for i := 0; i < 10; i++ {
 		createRandomAccount(t)
 	}
 
-	arg := ListAcountsParams {
-		Limit: 5,
+	arg := ListAcountsParams{
+		Limit:  5,
 		Offset: 5,
 	}
 
